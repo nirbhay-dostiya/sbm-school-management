@@ -1,0 +1,126 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile for students, faculty, and admins.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "faculty", "admin"] },
+        "department": { "type": "string" },
+        "year": { "type": "number" },
+        "profileImageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "name", "role"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Information about a university course.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "credits": { "type": "number" },
+        "facultyId": { "type": "string" },
+        "capacity": { "type": "number" }
+      },
+      "required": ["code", "name", "facultyId"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "Links a student to a course.",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "grade": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "completed", "dropped"] }
+      },
+      "required": ["studentId", "courseId", "status"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily attendance record.",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["present", "absent", "late"] }
+      },
+      "required": ["studentId", "courseId", "date", "status"]
+    },
+    "LibraryBook": {
+      "title": "Library Book",
+      "description": "A book in the college library.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "isbn": { "type": "string" },
+        "status": { "type": "string", "enum": ["available", "borrowed", "reserved"] },
+        "borrowerId": { "type": "string" },
+        "dueDate": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "author", "status"]
+    },
+    "HostelRoom": {
+      "title": "Hostel Room",
+      "description": "A room in the hostel.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "number": { "type": "string" },
+        "block": { "type": "string" },
+        "capacity": { "type": "number" },
+        "occupants": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["number", "block", "capacity"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "A college event.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "location": { "type": "string" },
+        "type": { "type": "string", "enum": ["academic", "social", "sports", "workshop"] }
+      },
+      "required": ["title", "date", "type"]
+    },
+    "ForumPost": {
+      "title": "Forum Post",
+      "description": "A post in the discussion forum.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["authorId", "title", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": { "schema": "User", "description": "User profiles." },
+    "courses": { "schema": "Course", "description": "Course information." },
+    "enrollments": { "schema": "Enrollment", "description": "Student course enrollments." },
+    "attendance": { "schema": "Attendance", "description": "Attendance records." },
+    "library": { "schema": "LibraryBook", "description": "Library catalog." },
+    "hostel": { "schema": "HostelRoom", "description": "Hostel room data." },
+    "events": { "schema": "Event", "description": "College events calendar." },
+    "forum": { "schema": "ForumPost", "description": "Forum discussions." }
+  }
+}
